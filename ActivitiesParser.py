@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import requests
 import responses
+from datetime import datetime
 
 class ActivitiesParser:
     
@@ -53,6 +54,10 @@ class ActivitiesParser:
         elevation_gain = 0
         moving_time = 0
         count = 0
+        # Put in chronological order
+        date_format = '%Y-%m-%dT%H:%M:%SZ'
+        activities.sort(key=lambda x: datetime.strptime(x['start_date_local'], date_format))
+        
         for activity in activities:
             if activity['type'].lower() != 'ride':
                 continue
@@ -65,7 +70,9 @@ class ActivitiesParser:
             distance = ("%.2f" % km)
             elevation = ("%.2f" % activity['total_elevation_gain'])
             count += 1
-            print(activity['start_date_local'] + ' - ' + activity['name'] + ': distance ' + distance + \
+            date_obj = datetime.strptime(activity['start_date_local'], date_format)
+            formatted_date = date_obj.strftime('%c')
+            print(formatted_date + ' - ' + activity['name'] + ': distance ' + distance + \
                 'km, elevation gain ' + elevation + ' metres, moving time: ' + hours + ' hours')
         print('================================================================================================')
         total_dist = "%.2f" % total_dist
@@ -74,7 +81,6 @@ class ActivitiesParser:
         print(f"Total distance: {total_dist} km")
         print(f"Total elevation gain: {elevation_gain} metres")
         print(f"Total moving time: {hours} hours")
-        
 
 if __name__ == "__main__":
     load_dotenv()
