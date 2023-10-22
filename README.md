@@ -1,4 +1,4 @@
-Script that fetches bike ride activities from Strava API and prints out summary.
+Script that fetches bike ride activities from Strava API and prints out summary.  
 Configurable date restrictions set in .env file.
 
 #### Setup
@@ -11,5 +11,5 @@ Configurable date restrictions set in .env file.
 - `python3 ActivitiesParser.py`
 
 ### API Ref
-https://developers.strava.com/
+https://developers.strava.com/  
 https://developers.strava.com/docs/reference/#api-Activities-getLoggedInAthleteActivities
